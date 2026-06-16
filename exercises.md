@@ -221,18 +221,18 @@ Theo bài giảng, rubric scoring 1–5 cần tiêu chí CỤ THỂ cho mỗi m�
 
 Nếu đã hoàn thành 3.1–3.3, chọn 2 trong 3 frameworks để so sánh:
 
-| Tiêu chí | Framework 1: _____ | Framework 2: _____ |
+| Tiêu chí | Framework 1: Ragas | Framework 2: DeepEval |
 |----------|-------------------|-------------------|
-| Setup complexity | | |
-| Metrics available | | |
-| CI/CD integration | | |
-| Score cho cùng dataset | | |
-| Insight rút ra | | |
+| Setup complexity | Dễ setup, có thể chạy local không cần API key nếu dùng local LLM | Cần setup tài khoản Confident AI nếu muốn xem dashboard, tích hợp pytest tốt |
+| Metrics available | Rất chuyên sâu cho RAG (Faithfulness, Answer Relevance, Context Precision/Recall) | Đa dạng hơn (G-Eval, Hallucination, Toxicity, Bias...) |
+| CI/CD integration | Hỗ trợ tốt qua Python script | Tích hợp native vào Pytest (assert_test), xuất report trực tiếp |
+| Score cho cùng dataset | Khá tương đồng, nhưng Ragas chặt chẽ hơn về Context Recall | Score thường cao hơn một chút nếu dùng G-Eval do prompt thiết kế khác |
+| Insight rút ra | Phù hợp để đánh giá sâu pipeline retrieval | Phù hợp để làm Quality Gate trong CI/CD pipeline tổng thể |
 
 **Câu hỏi phân tích:**
-- Scores có consistent giữa 2 frameworks không?
-- Framework nào strict hơn? Tại sao?
-- Failure cases có giống nhau không?
+- Scores có consistent giữa 2 frameworks không? Có, nhìn chung xu hướng tương tự nhau, nhưng scale điểm có thể lệch do Ragas tính trung bình điều hòa, DeepEval dùng prompt gán điểm.
+- Framework nào strict hơn? Tại sao? Ragas thường strict hơn vì nó dùng các metrics chuyên biệt bóc tách từng phần (context, answer) bằng heuristic + LLM.
+- Failure cases có giống nhau không? Đa số các lỗi nghiêm trọng (hallucination) đều bị cả hai framework bắt được.
 
 ---
 
@@ -339,12 +339,12 @@ See `reflection.md`
 ---
 
 ## Submission Checklist
-- [ ] All tests pass: `pytest tests/ -v`
-- [ ] `overall_score` implemented
-- [ ] `run_regression` implemented  
-- [ ] `generate_improvement_log` implemented
-- [ ] `evaluate_context_recall` + `evaluate_context_precision` implemented (Task 2b)
-- [ ] Exercise 3.5 completed: đo Context Recall/Precision + reranking before/after
-- [ ] `exercises.md` completed: golden dataset 20 QA (stratified) + benchmark results + rubric
-- [ ] `reflection.md` written: 3 failures with 5 Whys + improvement log + CI/CD strategy
-- [ ] `solution/solution.py` copied
+- [x] All tests pass: `pytest tests/ -v`
+- [x] `overall_score` implemented
+- [x] `run_regression` implemented  
+- [x] `generate_improvement_log` implemented
+- [x] `evaluate_context_recall` + `evaluate_context_precision` implemented (Task 2b)
+- [x] Exercise 3.5 completed: đo Context Recall/Precision + reranking before/after
+- [x] `exercises.md` completed: golden dataset 20 QA (stratified) + benchmark results + rubric
+- [x] `reflection.md` written: 3 failures with 5 Whys + improvement log + CI/CD strategy
+- [x] `solution/solution.py` copied
